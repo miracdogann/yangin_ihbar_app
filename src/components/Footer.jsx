@@ -14,9 +14,9 @@ export default function Footer() {
       {/* MAVİ KISIM */}
       <div
         style={{
-          background: "#003087",
+          background: "#0000FF",
           color: "#fff",
-          padding: "10px 0",
+          padding: "5px 0", // padding küçültüldü
           textAlign: "center",
           fontFamily: "Arial, sans-serif",
         }}
@@ -26,7 +26,7 @@ export default function Footer() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "30px",
+            gap: "15px", // gap küçültüldü
             flexWrap: "wrap",
             marginBottom: "5px",
           }}
@@ -35,8 +35,7 @@ export default function Footer() {
             src="logo.png"
             alt="Logo"
             style={{
-              height: "80px",
-              maxHeight: "60px",
+              height: "40px", // yükseklik küçültüldü
               width: "auto",
               objectFit: "contain",
             }}
@@ -45,66 +44,30 @@ export default function Footer() {
             src="/7.png"
             alt="YISIS Logo"
             style={{
-              height: "150px",
-              maxHeight: "100px",
+              height: "50px", // yükseklik küçültüldü
               width: "auto",
               objectFit: "contain",
             }}
           />
         </div>
-        <div style={{ margin: "10px 0" }}>
-          <Link
-            to="/"
-            style={{ color: "#fff", margin: "0 10px", textDecoration: "none" }}
-          >
-            Ana Sayfa
-          </Link>
-          <Link
-            to="/station"
-            style={{ color: "#fff", margin: "0 10px", textDecoration: "none" }}
-          >
-            İstasyonlar
-          </Link>
-          <Link
-            to="/statistics"
-            style={{ color: "#fff", margin: "0 10px", textDecoration: "none" }}
-          >
-            İstatistikler
-          </Link>
-          <Link
-            to="/map"
-            style={{ color: "#fff", margin: "0 10px", textDecoration: "none" }}
-          >
-            Harita
-          </Link>
-          <Link
-            to="/about"
-            style={{ color: "#fff", margin: "0 10px", textDecoration: "none" }}
-          >
-            Hakkımızda
-          </Link>
-          <Link
-            to="/contact"
-            style={{ color: "#fff", margin: "0 10px", textDecoration: "none" }}
-          >
-            İletişim
-          </Link>
+
+        <div style={{ margin: "5px 0", fontSize: "12px" }}>
+          <Link to="/" style={{ color: "#fff", margin: "0 5px", textDecoration: "none" }}>Ana Sayfa</Link>
+          <Link to="/station" style={{ color: "#fff", margin: "0 5px", textDecoration: "none" }}>İstasyonlar</Link>
+          <Link to="/statistics" style={{ color: "#fff", margin: "0 5px", textDecoration: "none" }}>İstatistikler</Link>
+          <Link to="/map" style={{ color: "#fff", margin: "0 5px", textDecoration: "none" }}>Harita</Link>
+          <Link to="/about" style={{ color: "#fff", margin: "0 5px", textDecoration: "none" }}>Hakkımızda</Link>
+          <Link to="/contact" style={{ color: "#fff", margin: "0 5px", textDecoration: "none" }}>İletişim</Link>
         </div>
 
-        <div style={{ fontSize: "12px", marginBottom: "10px" }}>
+        <div style={{ fontSize: "10px", marginBottom: "5px" }}>
           © 2025 XR Lab Yazılım A.Ş. Tüm hakları saklıdır.
         </div>
 
-        <div style={{ marginTop: "5px" }}>
-          <a href="#" style={{ color: "#fff", margin: "0 5px" }}>
-            <i>facebook</i>
-          </a>
-          <a href="#" style={{ color: "#fff", margin: "0 5px" }}>
-            <i>X</i>
-          </a>
-          <a href="#" style={{ color: "#fff", margin: "0 5px" }}>
-            <i>instagram</i>
-          </a>
+        <div style={{ marginTop: "3px", fontSize: "10px" }}>
+          <a href="#" style={{ color: "#fff", margin: "0 3px" }}>facebook</a>
+          <a href="#" style={{ color: "#fff", margin: "0 3px" }}>X</a>
+          <a href="#" style={{ color: "#fff", margin: "0 3px" }}>instagram</a>
         </div>
       </div>
 
@@ -113,8 +76,8 @@ export default function Footer() {
           background: "#000",
           color: "#ccc",
           textAlign: "center",
-          fontSize: "11px",
-          padding: "4px 10px",
+          fontSize: "10px",
+          padding: "2px 5px",
         }}
       >
         © {new Date().getFullYear()} YISIS SYSTEM. All rights reserved.
