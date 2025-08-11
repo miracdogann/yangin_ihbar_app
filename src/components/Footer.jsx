@@ -1,10 +1,18 @@
+<<<<<<< Updated upstream
 import { Link } from "react-router";
+=======
+import { Link } from "react-router-dom";
+>>>>>>> Stashed changes
 
 export default function Footer() {
   return (
     <div
       style={{
+<<<<<<< Updated upstream
         position: "total",
+=======
+        position: "relative",
+>>>>>>> Stashed changes
         bottom: 0,
         left: 0,
         width: "100%",
@@ -32,7 +40,11 @@ export default function Footer() {
           }}
         >
           <img
+<<<<<<< Updated upstream
             src="logo.png"
+=======
+            src="9.png"
+>>>>>>> Stashed changes
             alt="Logo"
             style={{
               height: "40px", // yükseklik küçültüldü

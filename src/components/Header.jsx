@@ -65,6 +65,17 @@ function Header() {
               <div className="w-100 d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center mt-3 mt-lg-0 gap-4">
                 {/* Sol Menü */}
                 <Nav className="d-flex flex-column flex-lg-row gap-4 gap-lg-5">
+<<<<<<< Updated upstream
+=======
+                <Nav.Link
+                    as={NavLink}
+                    to="/Statistics"
+                    className={getNavLinkClass}
+                    style={navLinkStyle}
+                  >
+                    İstatistikler
+                  </Nav.Link>
+>>>>>>> Stashed changes
                   <Nav.Link
                     as={NavLink}
                     to="/Station"
@@ -85,6 +96,7 @@ function Header() {
 
                 {/* Sağ Menü */}
                 <Nav className="d-flex flex-column flex-lg-row gap-4 gap-lg-5">
+<<<<<<< Updated upstream
                   <Nav.Link
                     as={NavLink}
                     to="/Statistics"
@@ -93,6 +105,17 @@ function Header() {
                   >
                     İstatistikler
                   </Nav.Link>
+=======
+                <Nav.Link
+                    as={NavLink}
+                    to="/Sustainability"
+                    className={getNavLinkClass}
+                    style={navLinkStyle}
+                  >
+                    Sürdürebilirlik
+                  </Nav.Link>
+                 
+>>>>>>> Stashed changes
                   <Nav.Link
                     as={NavLink}
                     to="/About"
