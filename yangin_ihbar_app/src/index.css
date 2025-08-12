@@ -1,0 +1,19 @@
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure all containers stay within viewport */
+* {
+  box-sizing: border-box;
+}
+
+/* Fix for Bootstrap containers to prevent overflow */
+.container-fluid {
+  padding-left: 15px;
+  padding-right: 15px;
+  max-width: 100%;
+}
