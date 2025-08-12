@@ -1,0 +1,15 @@
+/* Global styles to prevent horizontal scrollbar */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure all containers don't exceed viewport width */
+* {
+  box-sizing: border-box;
+}

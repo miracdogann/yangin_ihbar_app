@@ -1,5 +1,5 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 
 function Header() {
   const getNavLinkClass = ({ isActive }) =>
@@ -13,7 +13,7 @@ function Header() {
   };
 
   return (
-    <div style={{ position: "relative", width: "100vw" }}>
+    <div style={{ position: "relative", width: "100%" }}>
       {/* Orta Logo */}
       <div
         style={{
@@ -39,7 +39,7 @@ function Header() {
           backgroundColor: "#0000FF",
           paddingTop: "10px",
           paddingBottom: "10px",
-          width: "100vw",
+          width: "100%",
         }}
       >
         <Navbar
@@ -65,6 +65,15 @@ function Header() {
               <div className="w-100 d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center mt-3 mt-lg-0 gap-4">
                 {/* Sol Menü */}
                 <Nav className="d-flex flex-column flex-lg-row gap-4 gap-lg-5">
+                <Nav.Link
+                    as={NavLink}
+                    to="/Statistics"
+                    className={getNavLinkClass}
+                    style={navLinkStyle}
+                  >
+                    İstatistikler
+                  </Nav.Link>
+                
                   <Nav.Link
                     as={NavLink}
                     to="/Station"
@@ -87,12 +96,13 @@ function Header() {
                 <Nav className="d-flex flex-column flex-lg-row gap-4 gap-lg-5">
                   <Nav.Link
                     as={NavLink}
-                    to="/Statistics"
+                    to="/Sustainability"
                     className={getNavLinkClass}
                     style={navLinkStyle}
                   >
-                    İstatistikler
+                    Sürdürülebilirlik
                   </Nav.Link>
+                  
                   <Nav.Link
                     as={NavLink}
                     to="/About"
