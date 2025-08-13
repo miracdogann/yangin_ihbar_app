@@ -11,6 +11,8 @@ export default function MainLayout() {
       <Outlet />
 
       <Footer />
+      
+     
     </>
   );
 }

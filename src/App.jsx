@@ -8,6 +8,7 @@ import Statistics from "./pages/Statistics";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Sustainability from "./pages/Sustainability";
+import PrivacyInfo from "./pages/PrivacyInfo";
 function App() {
   const router = createBrowserRouter([
     {
@@ -25,6 +26,7 @@ function App() {
         { path: "contact", element: <Contact /> },
         { path: "about", element: <About /> },
         { path: "sustainability", element: <Sustainability /> },
+        { path: "privacy-info", element: <PrivacyInfo /> },
       ],
     },
   ]);
