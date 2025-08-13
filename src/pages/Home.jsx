@@ -127,18 +127,7 @@ function Home() {
         </Card>
       </Container>
 
-      {/* Footer */}
-      <footer
-        style={{
-          backgroundColor: "#001f4d", // koyu mavi
-          color: "white",
-          textAlign: "center",
-          padding: "20px 0",
-          fontSize: "0.9rem",
-        }}
-      >
-        © 2025 Yangın İhbar Sistemi | Tüm Hakları Saklıdır
-      </footer>
+      
     </div>
   );
 }

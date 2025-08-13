@@ -4,6 +4,27 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 export default function About() {
   const teamMembers = [
     {
+      name: "Burak Efe Kılıç",
+      role: "Frontend Developer",
+      description: "Web Site ve Mobil Uygulama Geliştirme",
+      expertise: ["React", "Node.js", "Web Site Geliştirme"],
+      image: "/images/about/burak.png"
+    },
+    {
+      name: "Fevzi Bağrıaçık",
+      role: "Backend Developer",
+      description: "Web Site ve Mobil Uygulama Geliştirme",
+      expertise: ["React", "Node.js", "Mobil Uygulama Geliştirme"],
+      image: "/images/about/fevzi.jpg"
+    },
+    {
+      name: "Kerem Işık",
+      role: "Siber Güvenlik Uzmanı",
+      description: "Yangın verileri analizi ve modelleme uzmanı",
+      expertise: ["Veri Analizi", "MCP Uzmanı", "Siber Güvenlik"],
+      image: "/images/about/kerem.jpg"
+    },
+    {
       name: "Mehmet Kıvrak",
       role: "Frontend Developer",
       description: "Web Site ve Mobil Uygulama Geliştirme",
@@ -18,30 +39,11 @@ export default function About() {
       image: "/images/about/mirac.jpg"
     },
     {
-      name: "Kerem Işık",
-      role: "Siber Güvenlik Uzmanı",
-      description: "Yangın verileri analizi ve modelleme uzmanı",
-      expertise: ["Veri Analizi", "MCP Uzmanı", "Siber Güvenlik"],
-      image: "/images/about/kerem.jpg"
-    },
-    {
       name: "Tolga Yılmaz",
       role: "Mobil Uygulama Geliştirici",
       description: "Yangın verileri analizi ve modelleme uzmanı",
       expertise: ["React", "Node.js", "Mobil Uygulama Geliştirme"],
       image: "/images/about/tolga.png"
-    },{
-      name: "Burak Efe Kılıç",
-      role: "Frontend Developer",
-      description: "Web Site ve Mobil Uygulama Geliştirme",
-      expertise: ["React", "Node.js", "Web Site Geliştirme"],
-      image: "/images/about/burak.png"
-    },{
-      name: "Fevzi Bağrıaçık",
-      role: "Backend Developer",
-      description: "Web Site ve Mobil Uygulama Geliştirme",
-      expertise: ["React", "Node.js", "Mobil Uygulama Geliştirme"],
-      image: "/images/about/fevzi.jpg"
     }
   ];
 
@@ -79,7 +81,7 @@ export default function About() {
     <div>
       {/* Hero Section */}
       <Container fluid className="py-5" style={{ 
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        background: "linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)",
         minHeight: "60vh"
       }}>
         <Container>

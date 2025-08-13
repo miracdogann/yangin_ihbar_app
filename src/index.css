@@ -49,3 +49,58 @@ html, body {
     print-color-adjust: exact;
   }
 }
+
+/* Modern Forced Colors Mode support (replaces deprecated -ms-high-contrast) */
+@media (forced-colors: active) {
+  /* Ensure proper contrast in forced colors mode */
+  .card, .btn, .badge {
+    forced-color-adjust: auto;
+  }
+  
+  /* Preserve important visual elements */
+  .bg-primary, .bg-secondary, .bg-success, .bg-danger, .bg-warning, .bg-info {
+    forced-color-adjust: none;
+    background-color: ButtonFace;
+    color: ButtonText;
+    border: 1px solid ButtonText;
+  }
+  
+  /* Ensure icons and important visual elements remain visible */
+  .text-primary, .text-secondary, .text-success, .text-danger, .text-warning, .text-info {
+    color: LinkText;
+  }
+  
+  /* Handle custom backgrounds in forced colors */
+  [style*="background"] {
+    forced-color-adjust: auto;
+  }
+}
+
+/* Prefers reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast color scheme support */
+@media (prefers-contrast: high) {
+  .card {
+    border: 2px solid;
+  }
+  
+  .btn {
+    border-width: 2px;
+  }
+  
+  /* Ensure sufficient contrast for text */
+  .text-muted {
+    opacity: 1;
+    font-weight: 500;
+  }
+}
