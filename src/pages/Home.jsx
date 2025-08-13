@@ -2,21 +2,13 @@ import React, { useState } from "react";
 import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
 import { FaFire, FaCheckCircle, FaBell, FaChartBar } from "react-icons/fa";
 import { useNavigate } from "react-router";
-import DataConsent from "../components/DataConsent";
+
 // import { Link } from "react-router-dom"; // Link eklendi
 
 function Home() {
   const navigate = useNavigate();
   const mainColor = "#0000ff"; // Header rengi
   const accentColor = "#ff9800"; // Uyumlu kontrast rengi (turuncu)
-
-  const handleDataAccept = () => {
-    console.log("Veri kullanımı kabul edildi");
-  };
-
-  const handleShowPrivacyPolicy = () => {
-    navigate("/privacy-info");
-  };
 
   const stats = [
     {
@@ -147,12 +139,6 @@ function Home() {
       >
         © 2025 Yangın İhbar Sistemi | Tüm Hakları Saklıdır
       </footer>
-
-      {/* Veri Kullanım Onayı */}
-      <DataConsent 
-        onAccept={handleDataAccept}
-        onShowPolicy={handleShowPrivacyPolicy}
-      />
     </div>
   );
 }

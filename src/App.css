@@ -36,5 +36,6 @@
 /* Güvenlik optimizasyonları */
 .data-consent-popup * {
   pointer-events: auto;
+  -webkit-user-select: none;
   user-select: none;
 }

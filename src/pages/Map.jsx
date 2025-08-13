@@ -54,9 +54,45 @@ export default function Map() {
           setMap(tomtomMap);
         } catch (error) {
           console.error('Error creating TomTom map:', error);
+          showDemoMap();
         }
       } else {
         console.log('TomTom not loaded or mapRef not available');
+      }
+    };
+
+    const showDemoMap = () => {
+      console.log('Showing demo map...');
+      if (mapRef.current) {
+        mapRef.current.innerHTML = `
+          <div style="
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            border-radius: 25px;
+          ">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🗺️</div>
+            <h3 style="margin-bottom: 1rem; font-weight: bold;">Demo Harita</h3>
+            <p style="margin-bottom: 2rem; opacity: 0.9; max-width: 400px;">
+              TomTom harita servisi yüklenirken sorun oluştu. 
+              Bu alanda interaktif harita görüntülenecektir.
+            </p>
+            <div style="
+              background: rgba(255,255,255,0.2);
+              padding: 1rem 2rem;
+              border-radius: 10px;
+              font-size: 0.9rem;
+            ">
+              📍 Ankara Merkez: 39.9334°N, 32.8597°E
+            </div>
+          </div>
+        `;
       }
     };
 
@@ -69,7 +105,11 @@ export default function Map() {
         css.id = 'tomtom-css';
         css.rel = 'stylesheet';
         css.type = 'text/css';
-        css.href = 'https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.14.0/maps/maps.css';
+        css.href = 'https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps.css';
+        css.onerror = () => {
+          console.warn('TomTom CSS 6.25.0 failed, trying 6.24.0');
+          css.href = 'https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.24.0/maps/maps.css';
+        };
         document.head.appendChild(css);
         console.log('TomTom CSS loaded');
       }
@@ -78,13 +118,26 @@ export default function Map() {
       if (!window.tt) {
         console.log('Loading TomTom JS...');
         const script = document.createElement('script');
-        script.src = 'https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.14.0/maps/maps-web.min.js';
+        script.src = 'https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps-web.min.js';
         script.onload = () => {
           console.log('TomTom JS loaded successfully');
           loadMap();
         };
         script.onerror = (error) => {
-          console.error('Error loading TomTom JS:', error);
+          console.warn('TomTom JS 6.25.0 failed, trying 6.24.0:', error);
+          // Alternatif versiyon deneme
+          const fallbackScript = document.createElement('script');
+          fallbackScript.src = 'https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.24.0/maps/maps-web.min.js';
+          fallbackScript.onload = () => {
+            console.log('TomTom JS fallback loaded successfully');
+            loadMap();
+          };
+          fallbackScript.onerror = (fallbackError) => {
+            console.error('Both TomTom versions failed:', fallbackError);
+            // Geliştirme amaçlı demo harita göster
+            showDemoMap();
+          };
+          document.head.appendChild(fallbackScript);
         };
         document.head.appendChild(script);
       } else {

@@ -67,7 +67,7 @@ function Header() {
                 <Nav className="d-flex flex-column flex-lg-row gap-4 gap-lg-5">
                 <Nav.Link
                     as={NavLink}
-                    to="/Statistics"
+                    to="/statistics"
                     className={getNavLinkClass}
                     style={navLinkStyle}
                   >
@@ -76,7 +76,7 @@ function Header() {
                 
                   <Nav.Link
                     as={NavLink}
-                    to="/Station"
+                    to="/station"
                     className={getNavLinkClass}
                     style={navLinkStyle}
                   >
@@ -84,7 +84,7 @@ function Header() {
                   </Nav.Link>
                   <Nav.Link
                     as={NavLink}
-                    to="/Map"
+                    to="/map"
                     className={getNavLinkClass}
                     style={navLinkStyle}
                   >
@@ -96,7 +96,7 @@ function Header() {
                 <Nav className="d-flex flex-column flex-lg-row gap-4 gap-lg-5">
                   <Nav.Link
                     as={NavLink}
-                    to="/Sustainability"
+                    to="/sustainability"
                     className={getNavLinkClass}
                     style={navLinkStyle}
                   >
@@ -105,7 +105,7 @@ function Header() {
                   
                   <Nav.Link
                     as={NavLink}
-                    to="/About"
+                    to="/about"
                     className={getNavLinkClass}
                     style={navLinkStyle}
                   >
@@ -113,7 +113,7 @@ function Header() {
                   </Nav.Link>
                   <Nav.Link
                     as={NavLink}
-                    to="/Contact"
+                    to="/contact"
                     className={getNavLinkClass}
                     style={navLinkStyle}
                   >

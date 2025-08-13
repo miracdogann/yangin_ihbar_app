@@ -2,38 +2,109 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Button, Card } from "react-bootstrap";
 import { FaInfoCircle, FaShieldAlt } from "react-icons/fa";
 
-const DataConsent = ({ onAccept, onShowPolicy }) => {
+// LocalStorage güvenli okuma fonksiyonu
+const getLocalStorageItem = (key) => {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem(key);
+    }
+    return null;
+  } catch (error) {
+    console.warn('LocalStorage okuma hatası:', error);
+    return null;
+  }
+};
+
+// LocalStorage güvenli yazma fonksiyonu
+const setLocalStorageItem = (key, value) => {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem(key, value);
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.warn('LocalStorage yazma hatası:', error);
+    return false;
+  }
+};
+
+const DataConsent = ({ onAccept, onShowPolicy, forceShow = false, alwaysShow = false }) => {
   const [show, setShow] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Component mount edildiğini işaretle
+    setMounted(true);
+    
     // Veri onayı kontrol et
-    try {
-      const dataConsent = localStorage.getItem('userDataConsent');
-      if (!dataConsent) {
-        // 1 saniye sonra göster (sayfa yüklendikten sonra)
-        const timer = setTimeout(() => {
-          setShow(true);
-        }, 1000);
-        return () => clearTimeout(timer);
-      }
-    } catch (error) {
-      console.warn('LocalStorage erişim hatası:', error);
-      // LocalStorage erişimi yoksa popup'ı göster
-      const timer = setTimeout(() => {
+    const checkConsent = () => {
+      // Eğer alwaysShow true ise, her zaman göster (test için)
+      if (alwaysShow) {
         setShow(true);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, []);
+        return;
+      }
+      
+      // Eğer forceShow true ise, localStorage'a bakmadan göster
+      if (forceShow) {
+        setShow(true);
+        return;
+      }
+      
+      // Development modunda localhost'ta ilk açılışta göster
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const isDev = process.env.NODE_ENV === 'development';
+      
+      if (isDev && isLocalhost) {
+        // Development'ta sessionStorage kullan (sayfa yenilenince sıfırlanır)
+        const sessionConsent = sessionStorage.getItem('userDataConsentSession');
+        if (!sessionConsent || sessionConsent !== 'accepted') {
+          setShow(true);
+          return;
+        }
+      }
+      
+      // Production'da localStorage kullan
+      const dataConsent = getLocalStorageItem('userDataConsent');
+      
+      if (!dataConsent || dataConsent !== 'accepted') {
+        // Popup'ı göster
+        setShow(true);
+      } else {
+        // Onay varsa popup'ı gösterme
+        setShow(false);
+      }
+    };
+
+    // Kısa bir gecikme ile kontrol et (DOM hazır olduğundan emin olmak için)
+    const timer = setTimeout(checkConsent, 100);
+    
+    return () => clearTimeout(timer);
+  }, [forceShow, alwaysShow]);
 
   const handleAccept = useCallback(() => {
-    try {
-      localStorage.setItem('userDataConsent', 'accepted');
-      setShow(false);
-      if (onAccept) onAccept();
-    } catch (error) {
-      console.warn('LocalStorage erişim hatası:', error);
-      setShow(false);
+    const success = setLocalStorageItem('userDataConsent', 'accepted');
+    
+    // Development modunda sessionStorage'a da kaydet
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const isDev = process.env.NODE_ENV === 'development';
+    
+    if (isDev && isLocalhost) {
+      try {
+        sessionStorage.setItem('userDataConsentSession', 'accepted');
+      } catch (error) {
+        console.warn('SessionStorage yazma hatası:', error);
+      }
+    }
+    
+    setShow(false);
+    
+    if (onAccept) {
+      onAccept();
+    }
+    
+    if (!success) {
+      console.warn('DataConsent: Veri onayı kaydedilemedi');
     }
   }, [onAccept]);
 
@@ -41,7 +112,23 @@ const DataConsent = ({ onAccept, onShowPolicy }) => {
     if (onShowPolicy) onShowPolicy();
   }, [onShowPolicy]);
 
-  if (!show) return null;
+  const handleReset = useCallback(() => {
+    // LocalStorage'daki onayı temizle ve popup'ı tekrar göster
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.removeItem('userDataConsent');
+    }
+    setShow(true);
+  }, []);
+
+  // Component mount edilene kadar hiçbir şey render etme
+  if (!mounted) {
+    return null;
+  }
+  
+  // Popup gösterilmeyecekse null döndür
+  if (!show) {
+    return null;
+  }
 
   return (
     <div

@@ -2,6 +2,8 @@
 html, body {
   overflow-x: hidden;
   max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 #root {
@@ -12,4 +14,38 @@ html, body {
 /* Ensure all containers don't exceed viewport width */
 * {
   box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Text alignment fallbacks */
+.text-match-parent {
+  text-align: -webkit-match-parent;
+  text-align: match-parent;
+  text-align: inherit;
+}
+
+/* User select utilities */
+.user-select-none {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.user-select-auto {
+  -webkit-user-select: auto;
+  user-select: auto;
+}
+
+.user-select-text {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Print color adjustment */
+@media print {
+  * {
+    color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
