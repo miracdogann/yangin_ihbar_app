@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { getStations } from "../../api";
+
+export const base_api_url = "https://miracdogan.pythonanywhere.com/api/";
 
 export default function Station() {
   const [stations, setStations] = useState([]);
@@ -10,13 +11,19 @@ export default function Station() {
   useEffect(() => {
     const fetchStations = async () => {
       try {
-        const response = await getStations();
-        if (Array.isArray(response.data)) {
-          setStations(response.data);
-        } else if (Array.isArray(response.data.results)) {
-          setStations(response.data.results);
-        } else if (Array.isArray(response.data.data)) {
-          setStations(response.data.data);
+        const response = await fetch(`${base_api_url}stations/`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        // API'nin farklı formatlarını kontrol et
+        if (Array.isArray(data)) {
+          setStations(data);
+        } else if (Array.isArray(data.results)) {
+          setStations(data.results);
+        } else if (Array.isArray(data.data)) {
+          setStations(data.data);
         } else {
           setStations([]);
           setError("API beklenmedik formatta veri döndürdü.");
@@ -28,6 +35,7 @@ export default function Station() {
         setLoading(false);
       }
     };
+
     fetchStations();
   }, []);
 
@@ -50,7 +58,7 @@ export default function Station() {
 
   return (
     <div className="container my-4">
-      <h1 className="text-center mb-4"> İstasyonlar</h1>
+      <h1 className="text-center mb-4">İstasyonlar</h1>
       <div className="table-responsive">
         <table className="table table-bordered table-striped align-middle text-center">
           <thead style={{ backgroundColor: "#f8f9fa", fontWeight: "bold" }}>
@@ -73,7 +81,9 @@ export default function Station() {
                     {station.address}
                     <br />
                     <strong>
-                      <a href={`tel:${station.phone_number}`}>{station.phone_number}</a>
+                      <a href={`tel:${station.phone_number}`}>
+                        {station.phone_number}
+                      </a>
                     </strong>
                   </td>
                   <td>
