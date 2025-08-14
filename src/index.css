@@ -1,0 +1,106 @@
+/* Global styles to prevent horizontal scrollbar */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure all containers don't exceed viewport width */
+* {
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Text alignment fallbacks */
+.text-match-parent {
+  text-align: -webkit-match-parent;
+  text-align: match-parent;
+  text-align: inherit;
+}
+
+/* User select utilities */
+.user-select-none {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.user-select-auto {
+  -webkit-user-select: auto;
+  user-select: auto;
+}
+
+.user-select-text {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Print color adjustment */
+@media print {
+  * {
+    color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* Modern Forced Colors Mode support (replaces deprecated -ms-high-contrast) */
+@media (forced-colors: active) {
+  /* Ensure proper contrast in forced colors mode */
+  .card, .btn, .badge {
+    forced-color-adjust: auto;
+  }
+  
+  /* Preserve important visual elements */
+  .bg-primary, .bg-secondary, .bg-success, .bg-danger, .bg-warning, .bg-info {
+    forced-color-adjust: none;
+    background-color: ButtonFace;
+    color: ButtonText;
+    border: 1px solid ButtonText;
+  }
+  
+  /* Ensure icons and important visual elements remain visible */
+  .text-primary, .text-secondary, .text-success, .text-danger, .text-warning, .text-info {
+    color: LinkText;
+  }
+  
+  /* Handle custom backgrounds in forced colors */
+  [style*="background"] {
+    forced-color-adjust: auto;
+  }
+}
+
+/* Prefers reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast color scheme support */
+@media (prefers-contrast: high) {
+  .card {
+    border: 2px solid;
+  }
+  
+  .btn {
+    border-width: 2px;
+  }
+  
+  /* Ensure sufficient contrast for text */
+  .text-muted {
+    opacity: 1;
+    font-weight: 500;
+  }
+}

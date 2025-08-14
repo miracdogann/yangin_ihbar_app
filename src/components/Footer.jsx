@@ -32,7 +32,7 @@ export default function Footer() {
           }}
         >
           <img
-            src="logo.png"
+            src="9.png"
             alt="Logo"
             style={{
               height: "40px", // yükseklik küçültüldü
