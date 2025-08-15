@@ -30,8 +30,8 @@ export default function Sustainability() {
       title: "İklim Eylemi",
       description: "İklim değişikliği ve etkileriyle mücadele için acil eylemler",
       ourContribution: "Yangın erken tespit sistemiyle orman yangınlarının çevresel etkilerini azaltır ve karbon salınımını önler.",
-      color: "#4CAF50",
-      bgColor: "#E8F5E8"
+      color: "#2196F3",
+      bgColor: "#E3F2FD"
     },
     {
       image: "/images/sustainability/sdg15.webp",
@@ -40,8 +40,8 @@ export default function Sustainability() {
       title: "Karasal Yaşam",
       description: "Karasal ekosistemlerin korunması ve sürdürülebilir kullanımı",
       ourContribution: "Orman yangınlarını önleyerek biyoçeşitliliği korur ve ekosistemlerin sürdürülebilirliğini sağlar.",
-      color: "#8BC34A",
-      bgColor: "#F1F8E9"
+      color: "#1976d2",
+      bgColor: "#E3F2FD"
     },
     {
       image: "/images/sustainability/sdg16.png",
@@ -61,14 +61,14 @@ export default function Sustainability() {
       title: "Karbon Ayak İzi Azaltma",
       description: "Yangın önleme ile yıllık 50,000 ton CO2 salınımı engellendi",
       impact: "50,000 ton",
-      color: "#4CAF50"
+      color: "#2196F3"
     },
     {
       icon: "🌲",
       title: "Orman Koruma",
       description: "Erken tespit ile 1,200 hektar orman alanı korundu",
       impact: "1,200 ha",
-      color: "#8BC34A"
+      color: "#1976d2"
     },
     {
       icon: "💧",
@@ -113,14 +113,14 @@ export default function Sustainability() {
     <div>
       {/* Hero Section */}
       <Container fluid className="py-5" style={{ 
-        background: "linear-gradient(135deg, #388e3c 0%, #a5d6a7 100%)",
+        background: "linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)",
         minHeight: "60vh"
       }}>
         <Container>
           <Row className="align-items-center min-vh-50">
             <Col lg={8} className="text-white">
               <div className="mb-4">
-                <Badge bg="light" text="success" className="px-3 py-2 rounded-pill mb-3" style={{ fontSize: '1rem' }}>
+                <Badge bg="light" text="primary" className="px-3 py-2 rounded-pill mb-3" style={{ fontSize: '1rem' }}>
                   🌍 Sürdürülebilir Kalkınma
                 </Badge>
               </div>
@@ -357,16 +357,16 @@ export default function Sustainability() {
                 className="text-center p-4 h-100"
                 style={{
                   borderRadius: '20px',
-                  background: 'linear-gradient(135deg, #667eea22, #764ba222)',
-                  border: '2px solid #667eea33',
+                  background: 'linear-gradient(135deg, #1976d222, #42a5f522)',
+                  border: '2px solid #1976d233',
                   transition: 'all 0.3s ease'
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #667eea33, #764ba233)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #1976d233, #42a5f533)';
                   e.currentTarget.style.transform = 'translateY(-5px)';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #667eea22, #764ba222)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #1976d222, #42a5f522)';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
@@ -383,7 +383,7 @@ export default function Sustainability() {
 
       {/* Gelecek Hedefleri */}
       <Container fluid className="py-5" style={{ 
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" 
+        background: "linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)" 
       }}>
         <Container>
           <Row className="align-items-center">
