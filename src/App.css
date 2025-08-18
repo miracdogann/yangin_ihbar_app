@@ -1,0 +1,41 @@
+/* Çerez Onayı Animasyonları */
+@keyframes slideUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Veri onayı popup özel stilleri */
+.data-consent-popup {
+  animation: slideUp 0.5s ease-out;
+}
+
+/* Responsive tasarım */
+@media (max-width: 768px) {
+  .data-consent-popup {
+    left: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+  }
+}
+
+/* Güvenlik optimizasyonları */
+.data-consent-popup * {
+  pointer-events: auto;
+  -webkit-user-select: none;
+  user-select: none;
+}
