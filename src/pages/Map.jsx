@@ -761,50 +761,175 @@ function Map() {
         {/* API Durum Bilgisi ve Yenileme Butonu */}
         <Row className="mb-4">
           <Col className="text-center">
-            <div className="d-flex justify-content-center align-items-center gap-3 mb-3">
-              <span style={{ 
-                color: "#495057", 
-                fontWeight: "600",
-                fontSize: "1.1rem",
-                textShadow: "0 1px 1px rgba(0,0,0,0.05)"
-              }}>
-                <strong>Veri Kaynağı:</strong> {apiError ? '🔴 API Hatası' : fireData.length > 0 ? '🟢 Canlı API' : '🟡 API Hazır'}
-                {fireData.length > 0 && <span className="ms-2" style={{ fontWeight: "700", color: "#28a745" }}>({fireData.length} veri)</span>}
-                {fireData.length === 0 && !apiError && <span className="ms-2" style={{ fontWeight: "500", color: "#ffc107" }}>(henüz veri yok)</span>}
-              </span>
-              <div className="d-flex gap-2">
-                <button 
-                  className="btn btn-sm btn-outline-primary rounded-pill"
-                  onClick={fetchFireData}
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <>
-                      <span className="spinner-border spinner-border-sm me-1" role="status"></span>
-                      Yenileniyor...
-                    </>
-                  ) : (
-                    <>
-                      <i className="bi bi-arrow-clockwise me-1"></i>
-                      Verileri Yenile
-                    </>
-                  )}
-                </button>
-                <button 
-                  className="btn btn-sm btn-outline-info rounded-pill"
-                  onClick={() => {
-                    console.log("🔍 Mevcut durumu kontrol et:");
-                    console.log("- fireData:", fireData);
-                    console.log("- loading:", loading);
-                    console.log("- apiError:", apiError);
-                    console.log("- map instance:", map);
-                    console.log("- markers:", markersRef.current);
-                  }}
-                >
-                  Debug Bilgisi
-                </button>
-              </div>
-            </div>
+                         <div className="d-flex justify-content-center mb-4">
+               <div className="d-flex align-items-center" style={{
+                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                 borderRadius: '50px',
+                 padding: '12px 24px',
+                 boxShadow: '0 8px 32px rgba(102, 126, 234, 0.3)',
+                 border: '2px solid rgba(255, 255, 255, 0.2)',
+                 backdropFilter: 'blur(10px)',
+                 minWidth: '320px',
+                 position: 'relative',
+                 overflow: 'hidden'
+               }}>
+                 {/* Arka plan animasyonu */}
+                 <div style={{
+                   position: 'absolute',
+                   top: '0',
+                   left: '0',
+                   right: '0',
+                   bottom: '0',
+                   background: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)',
+                   animation: 'shimmer 2s infinite',
+                   zIndex: '1'
+                 }}></div>
+                 
+                 <div className="d-flex align-items-center gap-4" style={{ position: 'relative', zIndex: '2' }}>
+                                       {/* Durum göstergesi */}
+                    <div className="d-flex align-items-center gap-3">
+                      <div style={{
+                        width: '16px',
+                        height: '16px',
+                        borderRadius: '50%',
+                        background: apiError ? '#ff6b6b' : fireData.length > 0 ? '#51cf66' : '#ffd43b',
+                        boxShadow: `0 0 20px ${apiError ? '#ff6b6b' : fireData.length > 0 ? '#51cf66' : '#ffd43b'}`,
+                        animation: 'pulse 2s infinite',
+                        border: '2px solid rgba(255, 255, 255, 0.3)'
+                      }}></div>
+                      
+                      <div className="d-flex align-items-center gap-2">
+                        <div style={{ 
+                          fontSize: '1.4rem',
+                          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
+                        }}>
+                          {apiError ? '🔴' : fireData.length > 0 ? '🟢' : '🟡'}
+                        </div>
+                        <span style={{ 
+                          color: 'white', 
+                          fontWeight: '600', 
+                          fontSize: '0.95rem',
+                          letterSpacing: '0.5px',
+                          textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+                        }}>
+                          {apiError ? 'API Hatası' : fireData.length > 0 ? 'Canlı Veri' : 'API Hazır'}
+                        </span>
+                      </div>
+                    </div>
+                   
+                   {/* Ayırıcı çizgi */}
+                   <div style={{
+                     width: '1px',
+                     height: '24px',
+                     background: 'rgba(255, 255, 255, 0.3)'
+                   }}></div>
+                   
+                                       {/* Veri sayısı */}
+                    {fireData.length > 0 && (
+                      <div className="d-flex align-items-center gap-2">
+                        <div style={{ 
+                          fontSize: '1.3rem',
+                          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
+                        }}>📊</div>
+                        <span style={{ 
+                          color: 'white', 
+                          fontWeight: '700', 
+                          fontSize: '1rem',
+                          textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+                        }}>
+                          {fireData.length} veri
+                        </span>
+                      </div>
+                    )}
+                    
+                    {fireData.length === 0 && !apiError && (
+                      <div className="d-flex align-items-center gap-2">
+                        <div style={{ 
+                          fontSize: '1.3rem',
+                          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
+                        }}>⏳</div>
+                        <span style={{ 
+                          color: 'white', 
+                          fontWeight: '600', 
+                          fontSize: '0.95rem',
+                          textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+                        }}>
+                          Veri bekleniyor
+                        </span>
+                      </div>
+                    )}
+                   
+                   {/* Ayırıcı çizgi */}
+                   <div style={{
+                     width: '1px',
+                     height: '24px',
+                     background: 'rgba(255, 255, 255, 0.3)'
+                   }}></div>
+                   
+                                       {/* Yenileme butonu */}
+                    <button 
+                      onClick={fetchFireData}
+                      disabled={loading}
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.2)',
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        borderRadius: '50%',
+                        width: '36px',
+                        height: '36px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white',
+                        transition: 'all 0.3s ease',
+                        cursor: loading ? 'not-allowed' : 'pointer',
+                        opacity: loading ? 0.6 : 1
+                      }}
+                      onMouseEnter={e => !loading && (e.target.style.background = 'rgba(255, 255, 255, 0.3)')}
+                      onMouseLeave={e => !loading && (e.target.style.background = 'rgba(255, 255, 255, 0.2)')}
+                    >
+                      {loading ? (
+                        <div className="spinner-border spinner-border-sm" role="status" style={{ width: '16px', height: '16px' }}>
+                          <span className="visually-hidden">Yükleniyor...</span>
+                        </div>
+                      ) : (
+                        <svg 
+                          width="18" 
+                          height="18" 
+                          viewBox="0 0 24 24" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          strokeWidth="2" 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round"
+                          style={{ 
+                            filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))',
+                            transition: 'transform 0.3s ease'
+                          }}
+                          onMouseEnter={e => e.target.style.transform = 'rotate(180deg)'}
+                          onMouseLeave={e => e.target.style.transform = 'rotate(0deg)'}
+                        >
+                          <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                          <path d="M21 3v5h-5"/>
+                          <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                          <path d="M3 21v-5h5"/>
+                        </svg>
+                      )}
+                    </button>
+                 </div>
+               </div>
+             </div>
+             
+                           <style>{`
+                @keyframes shimmer {
+                  0% { transform: translateX(-100%); }
+                  100% { transform: translateX(100%); }
+                }
+                
+                @keyframes pulse {
+                  0%, 100% { opacity: 1; }
+                  50% { opacity: 0.5; }
+                }
+              `}</style>
           </Col>
         </Row>
         
@@ -863,7 +988,7 @@ function Map() {
                   left: "0",
                   right: "0",
                   bottom: "0",
-                  background: "rgba(0,0,0,0.1)",
+                  background: "#3191E6",
                   zIndex: "1"
                 }}></div>
                 <div style={{ position: "relative", zIndex: "2" }}>
@@ -908,9 +1033,9 @@ function Map() {
       <Container className="py-5">
         <Row>
           <Col>
-            <Card className="border-0 shadow-lg" style={{ borderRadius: "25px" }}>
+            <Card className="border-0 shadow-lg overflow-hidden" style={{ borderRadius: "25px" }}>
               <Card.Header className="bg-gradient text-center py-4" style={{ 
-                background: "linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%)", 
+                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", 
                 color: "white",
                 position: "relative",
                 overflow: "hidden"
@@ -921,7 +1046,7 @@ function Map() {
                   left: "0",
                   right: "0",
                   bottom: "0",
-                  background: "rgba(0,0,0,0.1)",
+                  background: "#3191E6",
                   zIndex: "1"
                 }}></div>
                 <div style={{ position: "relative", zIndex: "2" }}>
