@@ -1,5 +1,5 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 
 function Header() {
   const getNavLinkClass = ({ isActive }) =>

@@ -2,8 +2,8 @@ import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import DataConsent from "../components/DataConsent";
-import { Outlet } from "react-router";
-import { useNavigate } from "react-router";
+import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function MainLayout() {
   const navigate = useNavigate();
