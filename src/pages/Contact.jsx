@@ -1,36 +1,167 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Element } from "react-scroll";
-import { Container, Row, Col, Card, Badge } from "react-bootstrap";
+import { Container, Row, Col, Card, Form, Alert } from "react-bootstrap";
 import emailjs from "emailjs-com";
 import { toast } from "react-toastify";
 
 const Contact = () => {
   const form = useRef();
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    user_email: "",
+    phone: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Ad soyad için sadece harf ve boşluk kabul et
+  const handleNameInput = (e, fieldName) => {
+    const value = e.target.value.replace(/[^a-zA-ZğüşıöçĞÜŞİÖÇ\s]/g, "");
+    setFormData({
+      ...formData,
+      [fieldName]: value,
+    });
+
+    // Hata mesajını temizle
+    if (errors[fieldName]) {
+      setErrors({
+        ...errors,
+        [fieldName]: "",
+      });
+    }
+  };
+
+  // Telefon için sadece sayı kabul et ve maksimum 11 hane
+  const handlePhoneInput = (e) => {
+    const value = e.target.value.replace(/\D/g, "").slice(0, 11);
+    setFormData({
+      ...formData,
+      phone: value,
+    });
+
+    // Hata mesajını temizle
+    if (errors.phone) {
+      setErrors({
+        ...errors,
+        phone: "",
+      });
+    }
+  };
+
+  // Diğer inputlar için genel handler
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    // Hata mesajını temizle
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    }
+  };
+
+  // Form gönderim validasyonu
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.first_name.trim()) {
+      newErrors.first_name = "Ad alanı zorunludur";
+    } else if (formData.first_name.trim().length < 2) {
+      newErrors.first_name = "Ad en az 2 karakter olmalıdır";
+    }
+
+    if (!formData.last_name.trim()) {
+      newErrors.last_name = "Soyad alanı zorunludur";
+    } else if (formData.last_name.trim().length < 2) {
+      newErrors.last_name = "Soyad en az 2 karakter olmalıdır";
+    }
+
+    if (!formData.user_email.trim()) {
+      newErrors.user_email = "E-posta alanı zorunludur";
+    } else if (!/\S+@\S+\.\S+/.test(formData.user_email)) {
+      newErrors.user_email = "Geçerli bir e-posta adresi giriniz";
+    }
+
+    if (formData.phone && formData.phone.length !== 11) {
+      newErrors.phone = "Telefon numarası 11 haneli olmalıdır (5XX XXX XX XX)";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Mesaj alanı zorunludur";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Mesaj en az 10 karakter olmalıdır";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const sendEmail = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
+    if (!validateForm()) {
+      toast.error("Lütfen formdaki hataları düzeltin.", {
+        position: "bottom-left",
+        autoClose: 4000,
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
     emailjs
       .sendForm(
-        "service_sunkmt5", // Service ID
-        "template_6kg4sqj", // Template ID
+        "service_sunkmt5",
+        "template_6kg4sqj",
         form.current,
-        "tbnjxo2hQ29shjkuB" // Public Key
+        "tbnjxo2hQ29shjkuB"
       )
       .then(
         (result) => {
-          toast.success("Mesaj başarıyla gönderildi!", {
-            position: "bottom-left",
-            autoClose: 4000,
-          });
+          // Toast bildirimi
+          toast.success(
+            "✅ Mesajınız başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğiz.",
+            {
+              position: "bottom-left",
+              autoClose: 5000,
+            }
+          );
+
+          // Ekrana bildirim göster
+          setShowSuccessAlert(true);
+
+          // Formu sıfırla
           form.current.reset();
+          setFormData({
+            first_name: "",
+            last_name: "",
+            user_email: "",
+            phone: "",
+            message: "",
+          });
+
+          // 5 saniye sonra bildirimi gizle
+          setTimeout(() => {
+            setShowSuccessAlert(false);
+          }, 8000);
+
+          setIsSubmitting(false);
         },
         (error) => {
-          toast.error("Bir hata oluştu. Lütfen tekrar deneyin.", {
+          toast.error("❌ Bir hata oluştu. Lütfen tekrar deneyin.", {
             position: "bottom-left",
             autoClose: 4000,
           });
           console.error(error.text);
+          setIsSubmitting(false);
         }
       );
   };
@@ -39,62 +170,6 @@ const Contact = () => {
     <>
       <style>
         {`
-          @keyframes fadeInUp {
-            from {
-              opacity: 0;
-              transform: translateY(30px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          
-          @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-          }
-          
-          @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-          }
-          
-          .contact-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-          }
-          
-          .contact-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-          }
-          
-          .contact-card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s ease;
-          }
-          
-          .contact-card:hover:before {
-            left: 100%;
-          }
-          
-          .icon-circle {
-            animation: float 6s ease-in-out infinite;
-            position: relative;
-          }
-          
-          .icon-circle:hover {
-            animation: pulse 0.5s ease-in-out;
-          }
-          
           .contact-form .form-control {
             border: 2px solid #e9ecef;
             border-radius: 20px;
@@ -102,287 +177,330 @@ const Contact = () => {
             font-size: 1rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(10px);
           }
           
           .contact-form .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+            border-color: #1976d2;
+            box-shadow: 0 0 0 0.25rem rgba(25, 118, 210, 0.25);
             transform: translateY(-3px);
             background: white;
           }
           
           .contact-form .form-control:hover {
-            border-color: #667eea;
+            border-color: #1976d2;
             transform: translateY(-1px);
           }
           
+          .contact-form .is-invalid {
+            border-color: #dc3545 !important;
+          }
+          
+          .contact-form .is-invalid:focus {
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+          }
+          
+          .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+          }
+          
           .send-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
             border: none;
             border-radius: 30px;
             padding: 18px 40px;
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
             transition: all 0.4s ease;
+            position: relative;
+            min-width: 180px;
           }
           
-          .send-btn:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            transition: left 0.5s ease;
-            z-index: -1;
-          }
-          
-          .send-btn:hover:before {
-            left: 0;
-          }
-          
-          .send-btn:hover {
+          .send-btn:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 15px 30px rgba(25, 118, 210, 0.4);
             color: white;
           }
           
-          .hero-bg {
-            position: relative;
-            overflow: hidden;
+          .send-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
           }
           
-          .hero-bg:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.3;
+          .success-alert {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
           }
           
-          .floating-shape {
-            position: absolute;
-            opacity: 0.1;
-            animation: float 8s ease-in-out infinite;
+          .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
           }
           
-          .floating-shape:nth-child(2) {
-            animation-delay: -2s;
-          }
-          
-          .floating-shape:nth-child(3) {
-            animation-delay: -4s;
+          @keyframes spin {
+            to { transform: rotate(360deg); }
           }
         `}
       </style>
-      
-      <Element name="contact">
 
-        {/* İletişim Formu */}
-        <Container className="py-5" style={{ paddingTop: "4rem" }}>
+      <Element name="contact">
+        <Container className="py-5 bg-light">
           <Row className="justify-content-center">
             <Col lg={10}>
-              <div className="text-center mb-5">
-                <h2 className="display-5 fw-bold mb-3" style={{ 
-                  color: "#2d3748",
-                  fontSize: "2.5rem"
-                }}>
-                  💬 Bize Mesaj Gönderin
-                </h2>
-                <p style={{ 
-                  color: "#718096", 
-                  fontSize: "1.2rem",
-                  maxWidth: "600px",
-                  margin: "0 auto"
-                }}>
-                  Sorularınız, projeleriniz veya acil durumlarınız için bizimle iletişime geçin. 
-                  Profesyonel ekibimiz size en kısa sürede dönüş yapacak.
-                </p>
-              </div>
-              
-              <Card className="border-0 shadow-lg contact-form" style={{ 
-                borderRadius: "35px",
-                overflow: "hidden"
-              }}>
-                <div style={{
-                  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                  padding: "3rem 2rem",
-                  textAlign: "center",
-                  position: "relative"
-                }}>
-                  <div style={{
-                    position: "absolute",
-                    top: "0",
-                    left: "0",
-                    right: "0",
-                    bottom: "0",
-                    background: "rgba(0,0,0,0.1)",
-                    zIndex: "1"
-                  }}></div>
+              {/* Başarılı Gönderim Bildirimi */}
+              {showSuccessAlert && (
+                <Alert
+                  variant="success"
+                  className="success-alert text-center mb-4"
+                >
+                  <div className="d-flex align-items-center justify-content-center">
+                    <span className="fs-3 me-3">✅</span>
+                    <div>
+                      <h5 className="alert-heading mb-1">
+                        Mesajınız Gönderildi!
+                      </h5>
+                      <p className="mb-0">
+                        En kısa sürede sizinle iletişime geçeceğiz.
+                      </p>
+                    </div>
+                  </div>
+                </Alert>
+              )}
+
+              <Card
+                className="border-0 shadow-lg contact-form"
+                style={{
+                  borderRadius: "25px",
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    background:
+                      "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat",
+                    padding: "3rem 2rem",
+                    textAlign: "center",
+                    position: "relative",
+                    color: "white",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "0",
+                      left: "0",
+                      right: "0",
+                      bottom: "0",
+                      background: "rgba(0,0,0,0.1)",
+                      zIndex: "1",
+                    }}
+                  ></div>
                   <div style={{ position: "relative", zIndex: "2" }}>
-                    <h3 className="fw-bold mb-3" style={{ 
-                      color: "white", 
-                      fontSize: "2.2rem",
-                      textShadow: "2px 2px 4px rgba(0,0,0,0.3)"
-                    }}>
+                    <h3
+                      className="fw-bold mb-3"
+                      style={{
+                        color: "white",
+                        fontSize: "2.2rem",
+                        textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
+                      }}
+                    >
                       🔥 Yangın Güvenliği Desteği
                     </h3>
-                    <p style={{ 
-                      color: "white", 
-                      opacity: "0.95",
-                      fontSize: "1.2rem",
-                      marginBottom: "0"
-                    }}>
+                    <p
+                      style={{
+                        color: "white",
+                        opacity: "0.95",
+                        fontSize: "1.2rem",
+                        marginBottom: "0",
+                      }}
+                    >
                       Formunu doldur, uzmanlarımız sana ulaşsın
                     </p>
                   </div>
                 </div>
-                
-                <Card.Body className="p-5" style={{ background: "#fafbfc" }}>
-                  <form ref={form} onSubmit={sendEmail}>
+
+                <Card.Body className="p-5" style={{ background: "#f8f9fa" }}>
+                  <Form ref={form} onSubmit={sendEmail}>
                     <Row className="g-4">
                       <Col md={6}>
-                        <div className="form-floating">
-                          <input
+                        <Form.Group>
+                          <Form.Label className="fw-semibold">
+                            👤 Adınız *
+                          </Form.Label>
+                          <Form.Control
                             type="text"
                             name="first_name"
-                            placeholder="Adınız"
+                            value={formData.first_name}
+                            onChange={(e) => handleNameInput(e, "first_name")}
                             required
-                            className="form-control"
-                            id="firstName"
+                            className={errors.first_name ? "is-invalid" : ""}
                             style={{
-                              height: "65px",
-                              fontSize: "1.1rem"
+                              height: "60px",
+                              fontSize: "1.1rem",
                             }}
+                            placeholder="Adınız"
                           />
-                          <label htmlFor="firstName" style={{ 
-                            fontWeight: "600", 
-                            color: "#6b7280",
-                            fontSize: "1rem"
-                          }}>👤 Adınız *</label>
-                        </div>
+                          {errors.first_name && (
+                            <div className="error-message">
+                              {errors.first_name}
+                            </div>
+                          )}
+                        </Form.Group>
                       </Col>
                       <Col md={6}>
-                        <div className="form-floating">
-                          <input
+                        <Form.Group>
+                          <Form.Label className="fw-semibold">
+                            👤 Soyadınız *
+                          </Form.Label>
+                          <Form.Control
                             type="text"
                             name="last_name"
-                            placeholder="Soyadınız"
+                            value={formData.last_name}
+                            onChange={(e) => handleNameInput(e, "last_name")}
                             required
-                            className="form-control"
-                            id="lastName"
+                            className={errors.last_name ? "is-invalid" : ""}
                             style={{
-                              height: "65px",
-                              fontSize: "1.1rem"
+                              height: "60px",
+                              fontSize: "1.1rem",
                             }}
+                            placeholder="Soyadınız"
                           />
-                          <label htmlFor="lastName" style={{ 
-                            fontWeight: "600", 
-                            color: "#6b7280",
-                            fontSize: "1rem"
-                          }}>👤 Soyadınız *</label>
-                        </div>
+                          {errors.last_name && (
+                            <div className="error-message">
+                              {errors.last_name}
+                            </div>
+                          )}
+                        </Form.Group>
                       </Col>
                     </Row>
-                    
-                    <Row className="g-4 mt-1">
+
+                    <Row className="g-4 mt-3">
                       <Col md={6}>
-                        <div className="form-floating">
-                          <input
+                        <Form.Group>
+                          <Form.Label className="fw-semibold">
+                            📧 E-mail Adresiniz *
+                          </Form.Label>
+                          <Form.Control
                             type="email"
                             name="user_email"
-                            placeholder="E-mail adresiniz"
+                            value={formData.user_email}
+                            onChange={handleInputChange}
                             required
-                            className="form-control"
-                            id="email"
+                            className={errors.user_email ? "is-invalid" : ""}
                             style={{
-                              height: "65px",
-                              fontSize: "1.1rem"
+                              height: "60px",
+                              fontSize: "1.1rem",
                             }}
+                            placeholder="ornek@email.com"
                           />
-                          <label htmlFor="email" style={{ 
-                            fontWeight: "600", 
-                            color: "#6b7280",
-                            fontSize: "1rem"
-                          }}>📧 E-mail Adresiniz *</label>
-                        </div>
+                          {errors.user_email && (
+                            <div className="error-message">
+                              {errors.user_email}
+                            </div>
+                          )}
+                        </Form.Group>
                       </Col>
                       <Col md={6}>
-                        <div className="form-floating">
-                          <input
+                        <Form.Group>
+                          <Form.Label className="fw-semibold">
+                            📱 Telefon Numaranız
+                          </Form.Label>
+                          <Form.Control
                             type="tel"
                             name="phone"
-                            placeholder="Telefon numaranız"
-                            className="form-control"
-                            id="phone"
+                            value={formData.phone}
+                            onChange={handlePhoneInput}
+                            className={errors.phone ? "is-invalid" : ""}
                             style={{
-                              height: "65px",
-                              fontSize: "1.1rem"
+                              height: "60px",
+                              fontSize: "1.1rem",
                             }}
+                            placeholder="5XX XXX XX XX"
+                            maxLength="11"
                           />
-                          <label htmlFor="phone" style={{ 
-                            fontWeight: "600", 
-                            color: "#6b7280",
-                            fontSize: "1rem"
-                          }}>📱 Telefon Numaranız</label>
-                        </div>
+                          {errors.phone && (
+                            <div className="error-message">{errors.phone}</div>
+                          )}
+                          <Form.Text className="text-muted">
+                            {formData.phone.length}/11 karakter
+                          </Form.Text>
+                        </Form.Group>
                       </Col>
                     </Row>
-                    
+
                     <div className="mt-4">
-                      <div className="form-floating">
-                        <textarea
+                      <Form.Group>
+                        <Form.Label className="fw-semibold">
+                          💬 Mesajınız *
+                        </Form.Label>
+                        <Form.Control
+                          as="textarea"
                           name="message"
-                          placeholder="Mesajınızı buraya yazın..."
+                          value={formData.message}
+                          onChange={handleInputChange}
                           required
-                          className="form-control"
-                          id="message"
-                          style={{ 
+                          className={errors.message ? "is-invalid" : ""}
+                          style={{
                             height: "150px",
                             resize: "vertical",
-                            fontSize: "1.1rem"
+                            fontSize: "1.1rem",
                           }}
-                        ></textarea>
-                        <label htmlFor="message" style={{ 
-                          fontWeight: "600", 
-                          color: "#6b7280",
-                          fontSize: "1rem"
-                        }}>💬 Mesajınız *</label>
-                      </div>
-                      <small style={{ 
-                        color: "#9ca3af", 
-                        fontSize: "0.9rem",
-                        marginTop: "8px",
-                        display: "block"
-                      }}>
-                        ℹ️ Lütfen ihtiyacınızı detaylı olarak belirtiniz. Bu sayede size daha iyi yardımcı olabiliriz.
-                      </small>
+                          placeholder="Mesajınızı buraya yazın..."
+                        />
+                        {errors.message && (
+                          <div className="error-message">{errors.message}</div>
+                        )}
+                        <Form.Text className="text-muted">
+                          ℹ Lütfen ihtiyacınızı detaylı olarak belirtiniz. Bu
+                          sayede size daha iyi yardımcı olabiliriz.
+                        </Form.Text>
+                      </Form.Group>
                     </div>
-                    
+
                     <div className="text-center mt-5">
-                      <button type="submit" className="btn btn-primary btn-lg send-btn">
-                        <span style={{ marginRight: "10px", fontSize: "1.2rem" }}>🚀</span>
-                        Mesajı Gönder
+                      <button
+                        type="submit"
+                        className="btn btn-primary btn-lg send-btn"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <span className="loading-spinner me-2"></span>
+                            Gönderiliyor...
+                          </>
+                        ) : (
+                          <>
+                            <span
+                              style={{
+                                marginRight: "10px",
+                                fontSize: "1.2rem",
+                              }}
+                            >
+                              🚀
+                            </span>
+                            Mesajı Gönder
+                          </>
+                        )}
                       </button>
                     </div>
-                    
+
                     <div className="text-center mt-3">
-                      <small style={{ 
-                        color: "#9ca3af",
-                        fontSize: "0.9rem"
-                      }}>
-                        🛡️ Kişisel bilgileriniz güvende tutulur ve asla üçüncü kişilerle paylaşılmaz.
+                      <small className="text-muted">
+                        🛡 Kişisel bilgileriniz güvende tutulur ve asla üçüncü
+                        kişilerle paylaşılmaz.
                       </small>
                     </div>
-                  </form>
+                  </Form>
                 </Card.Body>
               </Card>
             </Col>
@@ -393,4 +511,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Contact;
