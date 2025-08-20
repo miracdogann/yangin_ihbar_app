@@ -127,15 +127,12 @@ const Contact = () => {
       .then(
         (result) => {
           // Toast bildirimi
-          toast.success(
-            "✅ Mesajınız başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğiz.",
-            {
-              position: "bottom-left",
-              autoClose: 5000,
-            }
-          );
+          toast.success("✅ Mesajınız başarıyla gönderildi!", {
+            position: "bottom-left",
+            autoClose: 3000,
+          });
 
-          // Ekrana bildirim göster
+          // Sol alt köşede bildirim göster
           setShowSuccessAlert(true);
 
           // Formu sıfırla
@@ -151,7 +148,7 @@ const Contact = () => {
           // 5 saniye sonra bildirimi gizle
           setTimeout(() => {
             setShowSuccessAlert(false);
-          }, 8000);
+          }, 5000);
 
           setIsSubmitting(false);
         },
@@ -229,14 +226,6 @@ const Contact = () => {
             cursor: not-allowed;
           }
           
-          .success-alert {
-            border-radius: 20px;
-            border: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
-            color: white;
-          }
-          
           .loading-spinner {
             display: inline-block;
             width: 20px;
@@ -250,6 +239,47 @@ const Contact = () => {
           @keyframes spin {
             to { transform: rotate(360deg); }
           }
+          
+          .success-alert {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1060;
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+            max-width: 400px;
+            animation: slideInLeft 0.5s ease-out;
+          }
+          
+          @keyframes slideInLeft {
+            from {
+              transform: translateX(-100%);
+              opacity: 0;
+            }
+            to {
+              transform: translateX(0);
+              opacity: 1;
+            }
+          }
+          
+          .alert-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            line-height: 1;
+            padding: 0;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+          }
+          
+          .alert-close-btn:hover {
+            opacity: 1;
+          }
         `}
       </style>
 
@@ -257,26 +287,6 @@ const Contact = () => {
         <Container className="py-5 bg-light">
           <Row className="justify-content-center">
             <Col lg={10}>
-              {/* Başarılı Gönderim Bildirimi */}
-              {showSuccessAlert && (
-                <Alert
-                  variant="success"
-                  className="success-alert text-center mb-4"
-                >
-                  <div className="d-flex align-items-center justify-content-center">
-                    <span className="fs-3 me-3">✅</span>
-                    <div>
-                      <h5 className="alert-heading mb-1">
-                        Mesajınız Gönderildi!
-                      </h5>
-                      <p className="mb-0">
-                        En kısa sürede sizinle iletişime geçeceğiz.
-                      </p>
-                    </div>
-                  </div>
-                </Alert>
-              )}
-
               <Card
                 className="border-0 shadow-lg contact-form"
                 style={{
@@ -506,6 +516,34 @@ const Contact = () => {
             </Col>
           </Row>
         </Container>
+
+        {/* Sol Alt Köşede Başarılı Gönderim Bildirimi */}
+        {showSuccessAlert && (
+          <Alert variant="success" className="success-alert">
+            <div className="d-flex align-items-center">
+              <div className="flex-grow-1">
+                <div className="d-flex align-items-center">
+                  <span className="fs-4 me-3">✅</span>
+                  <div>
+                    <h6 className="alert-heading mb-1">
+                      Mesajınız Gönderildi!
+                    </h6>
+                    <p className="mb-0 small">
+                      En kısa sürede sizinle iletişime geçeceğiz.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="alert-close-btn"
+                onClick={() => setShowSuccessAlert(false)}
+              >
+                ×
+              </button>
+            </div>
+          </Alert>
+        )}
       </Element>
     </>
   );
