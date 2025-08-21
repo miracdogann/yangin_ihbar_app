@@ -56,21 +56,21 @@ export default function Sustainability() {
       title: "Karbon Ayak İzi Azaltma",
       description: "Yangın önleme ile yıllık 50,000 ton CO2 salınımı engellendi",
       impact: "50,000 ton",
-      color: "#2196F3"
+      color: "#000000"
     },
     {
       icon: "🌲",
       title: "Orman Koruma",
       description: "Erken tespit ile 1,200 hektar orman alanı korundu",
       impact: "1,200 ha",
-      color: "#1976d2"
+      color: "#000000"
     },
     {
       icon: "💧",
       title: "Su Tasarrufu",
       description: "Etkili müdahale ile yangın söndürme suyu tasarrufu sağlandı",
       impact: "2M litre",
-      color: "#2196F3"
+      color: "#000000"
     },
     {
       icon: "🐾",
@@ -108,7 +108,8 @@ export default function Sustainability() {
     <div>
       {/* Hero Section */}
       <Container fluid className="py-5" style={{ 
-        background: "linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)",
+        background:
+        "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat", 
         minHeight: "60vh"
       }}>
         <Container>
@@ -282,6 +283,9 @@ export default function Sustainability() {
               <p className="lead text-muted">
                 YiSiS'in çevre üzerindeki olumlu etkileri rakamlarla
               </p>
+              <i className="lead text-muted">
+                *Veriler temsilidir.
+              </i>
             </Col>
           </Row>
           <Row className="g-4">
@@ -340,16 +344,16 @@ export default function Sustainability() {
                 className="text-center p-4 h-100"
                 style={{
                   borderRadius: '20px',
-                  background: 'linear-gradient(135deg, #1976d222, #42a5f522)',
-                  border: '2px solid #1976d233',
+                  background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 100, 0.1))',
+                  border: '2px solid rgba(0, 0, 0, 0.2)',
                   transition: 'all 0.3s ease'
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #1976d233, #42a5f533)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 100, 0.2))';
                   e.currentTarget.style.transform = 'translateY(-5px)';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #1976d222, #42a5f522)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 100, 0.1))';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
@@ -366,7 +370,7 @@ export default function Sustainability() {
 
       {/* Gelecek Hedefleri */}
       <Container fluid className="py-5" style={{ 
-        background: "linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)" 
+        background: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat",
       }}>
         <Container>
           <Row className="align-items-center">

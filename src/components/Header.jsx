@@ -36,7 +36,7 @@ function Header() {
       {/* Navbar */}
       <div
         style={{
-          backgroundColor: "#0000FF",
+          backgroundColor: "#000000",
           paddingTop: "10px",
           paddingBottom: "10px",
           width: "100%",
@@ -46,7 +46,7 @@ function Header() {
           variant="dark"
           expand="lg"
           className="py-0"
-          style={{ width: "100%", backgroundColor: "#0000FF" }}
+          style={{ width: "100%", backgroundColor: "#000000" }}
         >
           <Container fluid className="px-3">
             {/* Sol Logo ve Toggle */}
