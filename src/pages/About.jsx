@@ -55,7 +55,7 @@ export default function About() {
              },
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {
                 name: "Kerem Işık",
-                role: "Cybersecurity",
+                role: "Cyber ​​Security Assistant",
                 description: "Yangın verileri analizi ve modelleme uzmanı",
                 expertise: ["Siber Güvenlik", "Ağ Güvenliği", "Veri Analizi"],
                 image: "/images/about/kerem.jpg",
