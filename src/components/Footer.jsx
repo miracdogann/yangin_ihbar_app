@@ -61,7 +61,7 @@ export default function Footer() {
         </div>
 
         <div style={{ fontSize: "10px", marginBottom: "5px" }}>
-          © 2025 XR Lab Yazılım A.Ş. Tüm hakları saklıdır.
+          © 2025 XR Lab  Tüm hakları saklıdır.
         </div>
 
         <div style={{ marginTop: "3px", fontSize: "10px" }}>

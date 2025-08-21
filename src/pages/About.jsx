@@ -279,7 +279,7 @@ export default function About() {
             <Col lg={6} className="text-white">
               <h2 className="display-5 fw-bold mb-4">Projemizin Geliştirildiği Konum</h2>
               <p className="lead mb-4">
-                YiSiS projesi, Manisa Celal Bayar Üniversitesi Teknik Bilimler Meslek Yüksekokulu'nda geliştirilmektedir.
+                YiSiS projesi, Manisa Celal Bayar Üniversitesi Manisa Teknik Bilimler Meslek Yüksekokulu'nda geliştirilmektedir.
               </p>
               <div className="mb-4">
                 <div className="d-flex align-items-center mb-3">

@@ -5,17 +5,15 @@ export default function Sustainability() {
   const sdgGoals = [
     {
       image: "/images/sustainability/sdg3.png",
-      backgroundImage: "/images/sustainability/sdg-3.png", // Sağlık temalı arka plan
       number: "SDG 3",
       title: "Sağlıklı ve Kaliteli Yaşam",
       description: "Herkes için sağlıklı yaşam ve refahı teşvik etmek",
       ourContribution: "Yangın duman zehirlenmelerini önler ve acil müdahale süresini kısaltarak can kayıplarını azaltır.",
-      color: "#2196F3",
-      bgColor: "#E3F2FD"
+      color: "#4CAF50",
+      bgColor: "#E8F5E8"
     },
     {
       image: "/images/sustainability/sdg11.png",
-      backgroundImage: "/images/sustainability/sdg-11.jpg", // Şehir temalı arka plan
       number: "SDG 11",
       title: "Sürdürülebilir Şehirler",
       description: "Şehirleri kapsayıcı, güvenli ve sürdürülebilir kılmak",
@@ -25,33 +23,30 @@ export default function Sustainability() {
     },
     {
       image: "/images/sustainability/sdg13.png",
-      backgroundImage: "/images/sustainability/sdg-13.jpg", // İklim temalı arka plan
       number: "SDG 13",
       title: "İklim Eylemi",
       description: "İklim değişikliği ve etkileriyle mücadele için acil eylemler",
       ourContribution: "Yangın erken tespit sistemiyle orman yangınlarının çevresel etkilerini azaltır ve karbon salınımını önler.",
-      color: "#2196F3",
-      bgColor: "#E3F2FD"
+      color: "#4CAF50",
+      bgColor: "#E8F5E8"
     },
     {
       image: "/images/sustainability/sdg15.webp",
-      backgroundImage: "/images/sustainability/sdg-15.jpg", // Orman temalı arka plan
       number: "SDG 15",
       title: "Karasal Yaşam",
       description: "Karasal ekosistemlerin korunması ve sürdürülebilir kullanımı",
       ourContribution: "Orman yangınlarını önleyerek biyoçeşitliliği korur ve ekosistemlerin sürdürülebilirliğini sağlar.",
-      color: "#1976d2",
-      bgColor: "#E3F2FD"
+      color: "#4CAF50",
+      bgColor: "#E8F5E8"
     },
     {
       image: "/images/sustainability/sdg16.png",
-      backgroundImage: "/images/sustainability/sdg-16.jpg", // Adalet temalı arka plan
       number: "SDG 16",
       title: "Barış ve Adalet",
       description: "Barışçıl ve kapsayıcı toplumlar için güçlü kurumlar",
       ourContribution: "Şeffaf veri paylaşımı ve güvenilir ihbar sistemi ile toplumsal güven inşa eder.",
       color: "#9C27B0",
-      bgColor: "#F3E5F5"
+      bgColor: "#E3F2FD"
     }
   ];
 
@@ -180,10 +175,6 @@ export default function Sustainability() {
                 style={{
                   borderRadius: '25px',
                   backgroundColor: goal.bgColor,
-                  backgroundImage: `url(${goal.backgroundImage})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat',
                   boxShadow: '0 15px 40px rgba(0,0,0,0.12)',
                   transition: 'all 0.4s ease',
                   minHeight: '450px'
@@ -197,16 +188,8 @@ export default function Sustainability() {
                   e.currentTarget.style.boxShadow = '0 15px 40px rgba(0,0,0,0.12)';
                 }}
               >
-                {/* Arka plan resmi için overlay */}
-                <div 
-                  className="position-absolute top-0 start-0 w-100 h-100"
-                  style={{
-                    backgroundColor: `${goal.bgColor}70`, // DD = ~87% opacity
-                    backdropFilter: 'blur(2px)',
-                    zIndex: 1
-                  }}
-                ></div>
-                <Card.Body className="p-5 text-center d-flex flex-column justify-content-between position-relative" style={{ zIndex: 2 }}>
+
+                <Card.Body className="p-5 text-center d-flex flex-column justify-content-between position-relative">
                   {/* Üst Kısım - SDG Resmi ve Başlık */}
                   <div className="mb-4">
                     <div className="mb-4">
