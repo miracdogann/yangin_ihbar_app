@@ -311,9 +311,9 @@ const Contact = () => {
                 }}
               >
                 <div
+                  className="bg-primary text-white"
                   style={{
-                    background:
-                      "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat",
+                    background: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat",
                     padding: "3rem 2rem",
                     textAlign: "center",
                     position: "relative",

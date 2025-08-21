@@ -695,7 +695,10 @@ function Map() {
   return (
     <div>
       {/* Hero Section */}
-      <Container fluid className="py-5" style={{ background: "linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)", minHeight: "60vh" }}>
+      <Container fluid className="py-5 bg-primary text-white" style={{ 
+        background: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat",
+        minHeight: "60vh"
+      }}>
         <Container>
           <Row className="align-items-center min-vh-50">
             <Col lg={8} style={{ color: "white" }}>

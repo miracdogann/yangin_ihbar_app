@@ -25,7 +25,7 @@ export default function About() {
              },
                                                                        {
              name: "Miraç Doğan",
-             role: "Mobile Developer", 
+             role: "Mobile App Developer", 
              description: "Uzman yazılım geliştirici ve sistem mimarı",
             expertise: ["React Native", "Django", "Mobil Uygulama Geliştirme"],
             image: "/images/about/mirac.jpg",
@@ -35,7 +35,7 @@ export default function About() {
           },
                                                                          {
               name: "Tolga Yılmaz",
-              role: "Mobile Developer",
+              role: "Mobile App Developer",
               description: "Yangın verileri analizi ve modelleme uzmanı",
               expertise: ["React Native", "Django", "Mobil Uygulama Geliştirme"],
               image: "/images/about/tolga.png",
@@ -45,7 +45,7 @@ export default function About() {
             },
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {
                name: "Fevzi Bağrıaçık",
-               role: "Back-end Developer",
+               role: "Backend Developer",
                description: "Web Site ve Mobil Uygulama Geliştirme",
                expertise: ["Node.js", "React Native", "Mobil Uygulama Geliştirme"],
                image: "/images/about/fevzi.jpg",
@@ -106,8 +106,8 @@ export default function About() {
   return (
     <div>
       {/* Hero Section */}
-      <Container fluid className="py-5" style={{ 
-        background: "linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)",
+      <Container fluid className="py-5 bg-primary text-white" style={{ 
+        background: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat",
         minHeight: "60vh"
       }}>
         <Container>
@@ -416,8 +416,8 @@ export default function About() {
       </Container>
 
       {/* Proje Konumu */}
-      <Container fluid className="py-5" style={{ 
-        background: "linear-gradient(135deg, #0000FF 0%, #4285F4 50%, #1976D2 100%)" 
+      <Container fluid className="py-5 bg-primary text-white" style={{ 
+        background: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat"
       }}>
         <Container>
           <Row className="align-items-center">

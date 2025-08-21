@@ -150,6 +150,9 @@ const Home = () => {
               <p className="text-muted fs-5">
                 Gerçek zamanlı yangın ihbar verileri ve müdahale istatistikleri
               </p>
+              <p className="text-muted fs-5">
+                *Veriler temsilidir.
+              </p>
             </Col>
           </Row>
           <Row className="g-4">

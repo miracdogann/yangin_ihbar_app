@@ -107,9 +107,8 @@ export default function Sustainability() {
   return (
     <div>
       {/* Hero Section */}
-      <Container fluid className="py-5" style={{ 
-        background:
-        "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat", 
+      <Container fluid className="py-5 bg-primary text-white" style={{ 
+        background: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat", 
         minHeight: "60vh"
       }}>
         <Container>
@@ -369,8 +368,8 @@ export default function Sustainability() {
       </Container>
 
       {/* Gelecek Hedefleri */}
-      <Container fluid className="py-5" style={{ 
-        background: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat",
+      <Container fluid className="py-5 bg-primary text-white" style={{ 
+        background: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 100, 0.7)), url('https://images.unsplash.com/photo-1503437313881-503a91226419') center/cover no-repeat"
       }}>
         <Container>
           <Row className="align-items-center">
