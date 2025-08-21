@@ -105,63 +105,79 @@ const Contact = () => {
   };
 
   const sendEmail = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    if (!validateForm()) {
-      toast.error("Lütfen formdaki hataları düzeltin.", {
-        position: "bottom-left",
-        autoClose: 4000,
-      });
-      setIsSubmitting(false);
-      return;
-    }
+  if (!validateForm()) {
+    toast.error("Lütfen formdaki hataları düzeltin.", {
+      position: "bottom-left",
+      autoClose: 4000,
+    });
+    setIsSubmitting(false);
+    return;
+  }
 
-    emailjs
-      .sendForm(
-        "service_sunkmt5",
-        "template_6kg4sqj",
-        form.current,
-        "tbnjxo2hQ29shjkuB"
-      )
-      .then(
-        (result) => {
-          // Toast bildirimi
-          toast.success("✅ Mesajınız başarıyla gönderildi!", {
-            position: "bottom-left",
-            autoClose: 3000,
-          });
+  // Ad ve soyadı birleştir
+  const fullName = `${formData.first_name} ${formData.last_name}`;
+  
+  // Forma gizli bir input ekleyerek full_name'i gönder
+  const hiddenInput = document.createElement("input");
+  hiddenInput.type = "hidden";
+  hiddenInput.name = "full_name";
+  hiddenInput.value = fullName;
+  form.current.appendChild(hiddenInput);
 
-          // Sol alt köşede bildirim göster
-          setShowSuccessAlert(true);
+  emailjs
+    .sendForm(
+      "service_sunkmt5",
+      "template_6kg4sqj",
+      form.current,
+      "tbnjxo2hQ29shjkuB"
+    )
+    .then(
+      (result) => {
+        // Gönderim başarılı olduğunda gizli input'u temizle
+        form.current.removeChild(hiddenInput);
+        
+        // Toast bildirimi
+        toast.success("✅ Mesajınız başarıyla gönderildi!", {
+          position: "bottom-left",
+          autoClose: 3000,
+        });
 
-          // Formu sıfırla
-          form.current.reset();
-          setFormData({
-            first_name: "",
-            last_name: "",
-            user_email: "",
-            phone: "",
-            message: "",
-          });
+        // Sol alt köşede bildirim göster
+        setShowSuccessAlert(true);
 
-          // 5 saniye sonra bildirimi gizle
-          setTimeout(() => {
-            setShowSuccessAlert(false);
-          }, 5000);
+        // Formu sıfırla
+        form.current.reset();
+        setFormData({
+          first_name: "",
+          last_name: "",
+          user_email: "",
+          phone: "",
+          message: "",
+        });
 
-          setIsSubmitting(false);
-        },
-        (error) => {
-          toast.error("❌ Bir hata oluştu. Lütfen tekrar deneyin.", {
-            position: "bottom-left",
-            autoClose: 4000,
-          });
-          console.error(error.text);
-          setIsSubmitting(false);
-        }
-      );
-  };
+        // 5 saniye sonra bildirimi gizle
+        setTimeout(() => {
+          setShowSuccessAlert(false);
+        }, 5000);
+
+        setIsSubmitting(false);
+      },
+      (error) => {
+        // Hata durumunda da gizli input'u temizle
+        form.current.removeChild(hiddenInput);
+        
+        toast.error("❌ Bir hata oluştu. Lütfen tekrar deneyin.", {
+          position: "bottom-left",
+          autoClose: 4000,
+        });
+        console.error(error.text);
+        setIsSubmitting(false);
+      }
+    );
+};
 
   return (
     <>
