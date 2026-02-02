@@ -1,9 +1,24 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Outlet } from "react-router";
+import DataConsent from "../components/DataConsent";
+import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function MainLayout() {
+  const navigate = useNavigate();
+
+  // Geliştirme modunda popup'ı gizlemek için bu değeri true yapın
+  const isDevelopment = false; // Bu değeri true yaparak popup'ı tamamen gizleyebilirsiniz
+
+  const handleDataAccept = () => {
+    // Veri kullanımı kabul edildi
+  };
+
+  const handleShowPrivacyPolicy = () => {
+    navigate("/privacy-info");
+  };
+
   return (
     <>
       <Header />
@@ -11,6 +26,14 @@ export default function MainLayout() {
       <Outlet />
 
       <Footer />
+
+      {/* Veri Kullanım Onayı - Tüm sayfalarda gösterilir */}
+      {!isDevelopment && (
+        <DataConsent 
+          onAccept={handleDataAccept}
+          onShowPolicy={handleShowPrivacyPolicy}
+        />
+      )}
     </>
   );
 }

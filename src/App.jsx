@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import MainLayout from "./layout/MainLayout";
 import Home from "./pages/Home";
@@ -7,6 +7,8 @@ import Station from "./pages/Station";
 import Statistics from "./pages/Statistics";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import Sustainability from "./pages/Sustainability";
+import PrivacyInfo from "./pages/PrivacyInfo";
 function App() {
   const router = createBrowserRouter([
     {
@@ -23,6 +25,8 @@ function App() {
         { path: "statistics", element: <Statistics /> },
         { path: "contact", element: <Contact /> },
         { path: "about", element: <About /> },
+        { path: "sustainability", element: <Sustainability /> },
+        { path: "privacy-info", element: <PrivacyInfo /> },
       ],
     },
   ]);
